@@ -49,8 +49,8 @@ def insert_row_snowflake(new_fruit):
         with my_cnx.cursor() as my_cur:
             my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('from streamlit')")
             return "Thnx fr adding me " + new_fruit
-    except error as e:
-        streamlit.error()
+    except Exception as e:
+        streamlit.text(e)
 
 streamlit.header("Fruit Advice...")
 try:
