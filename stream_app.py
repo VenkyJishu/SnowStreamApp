@@ -1,4 +1,5 @@
 import streamlit
+import snowflake.connector
 
 streamlit.title('My Parents new healthy Dinner ??')
 streamlit.header('Breakfast Menu')
@@ -28,10 +29,11 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 #streamlit.dataframe(my_fruit_list)
 streamlit.dataframe(fruits_to_show)
 
+import requests
 
 streamlit.header("Fruit Advice...")
 frt_choice = streamlit.text_input("what fruit info you would to have "," kiwi")
 streamlit.write("the user entered fruit choice is is ",frt_choice)
 
-import requests
+
 frt_response = requests.get("https://fruityvice.com/api/fruit/"+frt_choice)
