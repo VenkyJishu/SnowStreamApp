@@ -41,7 +41,7 @@ try:
         streamlit.error("Pls select fruit to get info...")
     else:
         streamlit.write("the user entered fruit choice is is ",frt_choice)
-        frt_response = requests.get("https://fruityvice.com/api/fruit/"+frt_choice)
+        frt_response = requests.get("https://fruityvice.com/api/fruit/"+ frt_choice)
         streamlit.text(frt_response)
         #api/fruit/banana
         frt_normlized = pandas.json_normalize(frt_response.json())
