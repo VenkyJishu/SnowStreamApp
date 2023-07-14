@@ -37,6 +37,14 @@ def get_fruitvice_data(this_fruit_choice):
     frt_response = requests.get("https://fruityvice.com/api/fruit/"+ frt_choice)  
     frt_normlized = pandas.json_normalize(frt_response.json())
     return frt_normlized
+def get_fruit_load_list():
+    my_cnx=snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    my_cur = my_cnx.cursor()
+    my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
+    my_data_row=my_cur.fetchall()
+    return my_data_row
+    
+
 
 streamlit.header("Fruit Advice...")
 try:
@@ -50,14 +58,9 @@ try:
 except URLError as e:
     streamlit.error()
 
-my_cnx=snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-#my_cur.execute("select current_user(),current_account(),current_region()")
-my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
-#my_data_row=my_cur.fetchone()
-my_data_row=my_cur.fetchall()
-#streamlit.header("Hello from snowflake")
-streamlit.header("fruit list contains")
-#streamlit.text(my_data_row)
-streamlit.dataframe(my_data_row)
+
+streamlit.text("The fruit load list Contains......")
+if streamlit.button("Get Fruit Load List"):
+    my_data_row_fun=get_fruit_load_list()
+    streamlit.dataframe(my_data_row_fun)
 
