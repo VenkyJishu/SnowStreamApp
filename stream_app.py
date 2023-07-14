@@ -45,11 +45,10 @@ def get_fruit_load_list():
     return my_data_row
 
 def insert_row_snowflake(new_fruit):
-    try:
-        my_cnx=snowflake.connector.connect(**streamlit.secrets["snowflake"])
-        my_cur = my_cnx.cursor()
+    try:       
+        with my_cnx.cursor() as my_cur:
         my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('from streamlit')") 
-        return "Thnx fr adding me "+new_fruit
+        return "Thnx fr adding me " + new_fruit
     except error as e:
         streamlit.error()
 
@@ -73,5 +72,6 @@ if streamlit.button("Get Fruit Load List"):
 
 add_fruit = streamlit.text_input("add new fruit ")
 if streamlit.button("Add fruit to the list"):
+    my_cnx=snowflake.connector.connect(**streamlit.secrets["snowflake"])
     bck_frm_fun = insert_row_snowflake(add_fruit)
     streamlit.text(bck_frm_fun)
