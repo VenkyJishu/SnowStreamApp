@@ -42,7 +42,7 @@ try:
     else:
         streamlit.write("the user entered fruit choice is is ",frt_choice)
         frt_response = requests.get("https://fruityvice.com/api/fruit/"+frt_choice)
-        print("frt_response ",frt_response)
+        streamlit.text(frt_response)
         #api/fruit/banana
         frt_normlized = pandas.json_normalize(frt_response.json())
         streamlit.dataframe(frt_normlized)
